@@ -118,7 +118,11 @@ var UIController = (function(){
         inputValue: '.add__value',
         inputButton: '.add__btn',
         incomeContainer: '.income__list',
-        expensesContainer: '.expenses__list'
+        expensesContainer: '.expenses__list',
+        budgetLabel: '.budget__value',
+        incomeLabel: '.budget__income--value',
+        expenseLabel: '.budget__expenses--value',
+        percentageLabel: '.budget__expenses--percentage'
     }
     return {
         getInput: function(){
@@ -161,8 +165,18 @@ var UIController = (function(){
             fieldsArr[0].focus();
         },
 
-        displayBudget: function() {
+        displayBudget: function(obj) {
 
+            document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
+            document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalIncome;
+            document.querySelector(DOMstrings.expenseLabel).textContent = obj.totalExpenses;
+            document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage;
+
+            if(obj.percentage > 0){
+                document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
+            } else {
+                document.querySelector(DOMstrings.percentageLabel).textContent = '--%';
+            }
         },
 
         getDOMstrings: function(){
@@ -193,7 +207,7 @@ var controller = (function(budgetCtrl, UICtrl){
         //2. Return the budget
         var budget = budgetController.getBudget();
         //3. Display the updated UI
-        console.log(budget);
+        UICtrl.displayBudget(budget);
     }
 
     var ctrlAddItem = function(){
@@ -217,6 +231,13 @@ var controller = (function(budgetCtrl, UICtrl){
     //Public Function that will start app
     return {
         init: function(){
+            const resetBudget = {
+                budget: 0,
+                totalIncome: 0,
+                totalExpenses: 0,
+                percentage: 0
+            }
+            UICtrl.displayBudget(resetBudget);
             setupEventListeners();
         }
     }
