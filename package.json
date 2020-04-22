@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm dist/bundle.js",
-    "dev": "webpack -d --mode development",
-    "build": "webpack -p --mode production",
+    "dev": "npm run clean && webpack -d --mode development",
+    "build": "npm run clean && webpack -p --mode production",
     "start": "webpack-dev-server ./dist/bundle.js"
   },
   "repository": {
